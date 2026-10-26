@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>startSmart SA - Start Your Real Business</title> 
+    <link rel="stylesheet" href="style.css">   
+</head>
+<body>
+<div class="mobile-container">
+    <header>
+        <h1>Start startSmart</h1>
+    </header>
+
+    <!-- WELCOME PAGE -->
+    <div id="WELCOME" class="page">
+        <div class="step-header">
+            <div class="step-number">0</div>
+        </div>
+        <h2>Welcome to startstartSmart</h2>
+        <div class="alert info">
+            <strong>You are about to start a real business</strong>
+            This guide will take you through every step—from your idea to your first customer.
+        </div>
+        
+        <div class="card">
+            <h4>What you will learn:</h4>
+            <p>How to validate your business idea</p>
+            <p>How to calculate if it will make money</p>
+            <p>How to manage money like a pro</p>
+            <p>How to grow your business</p>
+        </div>
+        
+        <div class="card">
+            <h4>Time to Complete</h4>
+            <p>About 20–30 minutes to get started, then you will track as you grow.</p>
+        </div>
+        <button onclick="navigateTo('validate')">Get Started</button>
+    </div>
+
+    <!-- STEP 1: VALIDATE IDEA -->
+    <div id="validate" class="page" style="display: none;">
+        <h1>Step 1: Validate Your Idea</h1>
+        <p style="font-size: 13px; color: #999">Does your business idea solve a real problem?</p>
+        
+        <label><strong>What is your business idea?</strong></label>
+        <input type="text" id="businessIdea" placeholder="Example: Sell homemade snacks to offices, Freelance graphic design, Tutoring service">
+        
+        <label><strong>Who are your target customers?</strong></label>
+        <input type="text" id="targetCustomer" placeholder="Example: Office workers, Small businesses, High school students">
+        
+        <label><strong>Why will they buy from you?</strong></label>
+        <textarea id="uniqueValue" placeholder="Example: My snacks are homemade and cheaper, I am faster than big agencies, I teach in simple language"></textarea>
+        
+        <div class="tips-box">
+            <h4>Quick Validation Checklist</h4>
+            <ul>
+                <li>Talk to 5–10 potential customers</li>
+                <li>Ask if they would pay</li>
+                <li>Ask what they would pay</li>
+                <li>Ask what is most important to them</li>
+                <li>Don't try to convince them - listen</li>
+            </ul>
+        </div>
+        <small>Your privacy matters:nothing you enter here is saved or shared</small>
+        
+        <button onclick="saveValidation()">Save</button>
+        <div id="validationResult"></div>
+        
+        <div class="button-group" style="margin-top: 25px;">
+            <button class="secondary" onclick="navigateTo('WELCOME')">Back</button>
+            <button onclick="navigateTo('business_model')">Continue to Step 2</button>
+        </div>
+    </div>
+
+    <!-- STEP 2: BUSINESS MODEL -->
+    <div id="business_model" class="page" style="display: none;">
+        <h2>Step 2: Business Model</h2>
+        <p style="font-size: 13px; color: #999;">How will you make money?</p>
+        
+        <label><strong>What do you want to sell or offer?</strong></label>
+        <input type="text" id="productService" placeholder="Example: Homemade snacks, Graphic design, Tutoring service">
+        
+        <label><strong>Available Capital (R)</strong></label>
+        <input type="number" id="capital" placeholder="Example: 1000" min="0">
+        <small style="color: #999; display: block; margin-bottom: 10px;">Start small - be honest</small>
+        
+        <label><strong>Where will you sell your product/service?</strong></label>
+        <input id="location" type="text" placeholder="Example: Online, Local store, Client meetings">
+        
+        <label><strong>How will customers pay?</strong></label>
+        <select id="paymentMethod">
+            <option value="Cash">Cash</option>
+            <option value="Card">Card</option>
+            <option value="Digital payment">Digital Payment (Zapper, SnapScan)</option>
+            <option value="Bank Transfer">Bank Transfer (EFT)</option>
+        </select>
+        
+        <div class="card" style="margin-top: 20px;">
+            <h4>Profit Check</h4>
+            <label>Selling price per unit (R)</label>
+            <input type="number" id="unitPrice" min="0" step="0.01">
+            
+            <label>Cost per unit (R)</label>
+            <input type="number" id="unitCost" min="0" step="0.01">
+            
+            <label>Expected units sold per month</label>
+            <input type="number" id="unitsSold" min="0" step="1">
+            
+            <button onclick="calculateProfit()" style="margin-top: 10px;">Calculate Profit</button>
+            
+            <div id="calculation" class="calc-result" style="display: none; margin-top: 15px;">
+                <h4>Estimated Monthly Profit</h4>
+                <div class="amount" id="profitAmount">R0</div>
+                <small style="color: #999; margin-top: 10px; display: block;">This is your estimated profit per month</small>
+            </div>
+        </div>
+        
+        <button onclick="createBusiness()" style="margin-top: 15px; background-color: #2563ab; color: white;">Create My Business Plan</button>
+        <div id="businessResult"></div>
+        
+        <div class="button-group" style="margin-top: 25px;">
+            <button class="secondary" onclick="navigateTo('validate')">Back</button>
+            <button onclick="navigateTo('startup')">Continue to Step 3</button>
+        </div>
+    </div>
+
+    <!-- STEP 3: STARTUP COSTS -->
+    <div id="startup" class="page" style="display: none;">
+        <h1>Step 3: Calculate Startup Costs</h1>
+        <p style="font-size: 13px; color: #999;">How much money do you need to start your business?</p>
+        
+        <div class="alert info">
+            These are the one-time costs to get your business running.
+        </div>
+        
+        <div class="calculator">
+            <label><strong>Equipment/Tools needed? (R)</strong></label>
+            <input type="number" id="equipment" placeholder="Example: 500 (laptop, phone, etc)" min="0" step="50">
+            
+            <label><strong>Stock/Inventory to start? (R)</strong></label>
+            <input type="number" id="inventory" placeholder="Example: 1000 (products to sell)" min="0" step="50">
+            
+            <label><strong>Registration/Permits? (R)</strong></label>
+            <input type="number" id="registration" placeholder="Example: 175 (CIPC registration)" min="0" step="50">
+            
+            <label><strong>Other costs? (R)</strong></label>
+            <input type="number" id="otherCost" placeholder="Example: 300 (website, packaging)" min="0" step="50">
+            
+            <button onclick="calculateStartupCosts()" style="margin-top: 15px;">Calculate Total Startup Cost</button>
+        </div>
+        
+        <div id="startupResult" class="calc-result" style="display: none; margin-top: 15px;">
+            <h4>Total Startup Cost</h4>
+            <div class="amount" id="startupAmount">R0</div>
+            <small style="color: #999; margin-top: 10px; display: block;">You need this much capital to start safely</small>
+        </div>
+        
+        <div class="tips-box" style="margin-top: 20px;">
+            <h4>Start Lean Framework</h4>
+            <ul>
+                <li>Use what you have first</li>
+                <li>Borrow or rent instead of buying</li>
+                <li>Buy stock only as customers order</li>
+                <li>Use free tools (WhatsApp Business, Facebook Marketplace)</li>
+            </ul>
+        </div>
+        
+        <div class="button-group" style="margin-top: 25px;">
+            <button class="secondary" onclick="navigateTo('business_model')">Back</button>
+            <button onclick="navigateTo('setup')">Continue to Step 4</button>
+        </div>
+    </div>
+
+    <!-- STEP 4: LEGAL SETUP -->
+    <div id="setup" class="page" style="display: none;">
+        <h2>Step 4: Legal Setup</h2>
+        <p style="font-size: 13px; color: #999;">Get your business registered in South Africa</p>
+        
+        <div class="card" style="border-left: 4px solid #087f79; cursor: pointer;" onclick="selectStructure('sole')">
+            <h4>Sole Proprietor (Easiest)</h4>
+            <p><strong>Cost:</strong> R0</p>
+            <p><strong>Best for:</strong> Solo freelancers, small services, informal traders</p>
+            <p><strong>Status:</strong> Simple. Just you. No official CIPC registration needed to start.</p>
+        </div>
+        
+        <div class="card" style="border-left: 4px solid #087f79; cursor: pointer;" onclick="selectStructure('partnership')">
+            <h4>Partnership Joint Venture</h4>
+            <p><strong>Cost:</strong> R0 - R500 (For a legal agreement)</p>
+            <p><strong>Best for:</strong> 2 or more partners running an informal business together</p>
+            <p><strong>Status:</strong> Requires a solid written agreement outlining profit shares.</p>
+        </div>
+        
+        <div class="card" style="border-left: 4px solid #087f79; cursor: pointer;" onclick="selectStructure('pty')">
+            <h4>Private Company (Pty Ltd)</h4>
+            <p><strong>Cost:</strong> R125 - R175</p>
+            <p><strong>Best for:</strong> Growing businesses wanting to look professional or apply for funding</p>
+            <p><strong>Status:</strong> Registered formally via CIPC (BizPortal).</p>
+        </div>
+        
+        <div id="setupChecklist" style="display: none; margin-top: 20px;">
+            <h3>Your Registration Checklist</h3>
+            
+            <div class="checklist">
+                <label>
+                    <input type="checkbox">
+                    <span class="checklist-item">
+                        <strong>1. Register Business Name & Company</strong>
+</span>
+</label>
+            </div>
+        </div>
+        <div class="button-group" style="margin-top: 25px;">
+            <button class="secondary" onclick="navigateTo('startup')">Back</button>
+            <button onclick="finishPlan()">Finish</button>
+        </div>
+        <div id="finishMassage"></div>
+        <script>
+        function navigateTo(pageId) {
+            document.querySelectorAll('.page').forEach(function(p) {
+                p.style.display = 'none';
+            });
+            document.getElementById(pageId).style.display = 'block';
+        }
+        let selectedStructure = '';
+        function selectStructure(type) {
+            selectedStructure = type;
+            //highlight the selected card
+            document.querySelectorAll('#setup .card').forEach(function(c) {
+                c.style.backgroundColor = '';
+        });
+        event.currentTarget.style.background = '#e0f7f7';
+        console.log('selected:', type)
+    } 
+    function createBusiness() {
+        const Idea = document.getElementById('businessIdea').value.trim();
+        if (Idea === '') {
+            document.getElementById('businessResult').innerHTML = 
+          '<p style="color: red;">Please enter your business idea before creating a business plan.</p>';            
+       return;
+        }
+        document.getElementById('businessResult').innerHTML = 
+        '<div class="card">'
+            '<h4>Business Plan Created!</h4>'
+            '<p><strong>Business Idea:</strong> ' + Idea + '</p>'
+            '<p><strong>Structure:</strong> ' + (selectedStructure || 'Not selected') + '</p>' +
+        '</div>';
+    }
+    function saveValidation() {
+        const Idea = document.getElementById('businessIdea').value.trim();
+        const result = document.getElementById('validationResult');
+        if (Idea === '') {
+            result.innerHTML = '<p style="color: red;">Please enter your business idea.</p>';
+            return;
+        }
+        result.innerHTML = '<p style="color: green;">Business idea is valid!</p>';
+    }
+    function calculateProfit() {
+        const unitPrice = parseFloat(document.getElementById('unitPrice').value) || 0;
+        const unitCost = parseFloat(document.getElementById('unitCost').value) || 0;
+        const unitsSold = parseInt(document.getElementById('unitsSold').value) || 0;
+        const profit = (unitPrice - unitCost) * unitsSold;
+        document.getElementById('profitAmount').textContent = 'R' + profit.toFixed(2);
+        document.getElementById('calculation').style.display = 'block';
+    }
+    function calculateStartupCosts() {
+        let total = 0;
+        document.querySelectorAll('#startup input').forEach(function(input) {
+            total += parseFloat(input.value) || 0;
+        });
+        document.getElementById('startupAmount').textContent = 'R' + total.toFixed(2);
+        document.getElementById('startupResult').style.display = 'block';
+    }
+    function finishPlan() {
+        const box =  document.getElementById('finishMassage');
+        box.textContent = '';
+      const card = document.createElement('div');
+      card.className = 'card';
+      const title = document.createElement('h4');
+      title.textContent = 'congratulations! ';
+      const text = document.createElement('p');
+      text.textContent = 'you havecompleted all 4 steps. You now know your idea,your business model,your startup cost and your legal structure.Take the next step and made your first sale!'
+      const note = document.createElement('small');
+      note.textContent = 'Costs shown estimate. Please confiem current fee with CIPC.';
+
+      card.appendChild(title);
+      card.appendChild(text);
+      card.appendChild(note);
+      box.appendChild(card);
+      box.scrollIntoView({behavior: 'smooth'});
+    }
+    </script>
+        </body>
+</html>
